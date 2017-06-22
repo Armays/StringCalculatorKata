@@ -8,33 +8,25 @@ namespace SolidExercices
     {
         public double Calculate(string operation)
         {
-            Func<double, double, double> addition = (a, b) => a + b;
-            Func<double, double, double> substraction = (a, b) => a - b;
-            Func<double, double, double> division = (a, b) => a / b;
-            Func<double, double, double> multiplication = (a, b) => a * b;
-            Dictionary<Func<double, double, double>, char> dictionary = new Dictionary<Func<double, double, double>, char>();
-            dictionary.Add(addition, '+');
-            dictionary.Add(substraction, '-');
-            dictionary.Add(division,'/');
-            dictionary.Add(multiplication, '*');
-
-
-            foreach (KeyValuePair<Func<double, double, double>, char> entry in dictionary)
-            {
-                double response = 0;
-                if (operation.Contains(entry.Value))
+            double Addition(double a, double b) => a + b;
+            double Substraction(double a, double b) => a - b;
+            double Division(double a, double b) => a / b;
+            double Multiplication(double a, double b) => a * b;
+            var dictionary =
+                new Dictionary<Func<double, double, double>, char>
                 {
-                    
-                    var numbers = operation.Split(entry.Value);
-                    for (var i = 0; i < numbers.Length; i++)
-                    {
-                        double castNumber = Convert.ToDouble(numbers[i]);
+                    {Addition, '+'},
+                    {Substraction, '-'},
+                    {Division, '/'},
+                    {Multiplication, '*'}
+                };
 
-                        response = entry.Key(response, castNumber);
-                    }
-                    return response;
-                }
-                
+
+            foreach (var entry in dictionary)
+            {
+                if (!operation.Contains(entry.Value)) continue;
+                var numbers = operation.Split(entry.Value);
+                return numbers.Select(Convert.ToDouble).Aggregate<double, double>(0, (current, castNumber) => entry.Key(current, castNumber));
             }
             return -99999;
         }
