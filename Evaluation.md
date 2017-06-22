@@ -17,7 +17,7 @@ A LA FIN DU TP: pensez à pousser vos commits sur votre compte GitHub et envoyer 
 Réponses aux questions posées
 -----------------------------
 
-Q1)
+Q1) On peut faire un dictionnaire qui va associer chaque opérateur à la fonction associée.
 
 Q2)
 

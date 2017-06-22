@@ -7,32 +7,21 @@ namespace SolidExercices
 {
     public class Calculator
     {
-        public double Calculate(string operation)
+        public double Calculate(string operation, Dictionary<char, Func<double, double, double>> dictionary)
         {
-            double Addition(double a, double b) => a + b;
+            
             
             try
             {
-                double Substraction(double a, double b) => a - b;
-                double Division(double a, double b) => a / b;
-                double Multiplication(double a, double b) => a * b;
                 var found = false;
-                var dictionary =
-                    new Dictionary<Func<double, double, double>, char>
-                    {
-                        {Addition, '+'},
-                        {Substraction, '-'},
-                        {Division, '/'},
-                        {Multiplication, '*'}
-                    };
                 foreach (var entry in dictionary)
                 {
                     if (found) throw new MultipleOperatorsException();
-                    if (!operation.Contains(entry.Value)) continue;
+                    if (!operation.Contains(entry.Key)) continue;
                     else found = true;
-                    var numbers = operation.Split(entry.Value);
+                    var numbers = operation.Split(entry.Key);
                     return numbers.Select(Convert.ToDouble)
-                        .Aggregate<double, double>(0, (current, castNumber) => entry.Key(current, castNumber));
+                        .Aggregate<double, double>(0, (current, castNumber) => entry.Value(current, castNumber));
                 }
                 if (!found) throw new NoneOperatorException();
                 return -99999;

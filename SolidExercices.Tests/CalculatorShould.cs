@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Remoting.Messaging;
 using NFluent;
 using NUnit.Framework;
 
@@ -6,35 +8,54 @@ namespace SolidExercices.Tests
 {
     public class CalculatorShould
     {
+        private Dictionary<char, Func<double, double, double>> ConstructDictionary()
+        {
+            double Addition(double a, double b) => a + b;
+            double Substraction(double a, double b) => a - b;
+            double Division(double a, double b) => a / b;
+            double Multiplication(double a, double b) => a * b;
+
+            var dictionary =
+                new Dictionary<char, Func<double, double, double>>
+                {
+                    {'+', Addition},
+                    {'-', Substraction},
+                    {'/', Division},
+                    {'*', Multiplication}
+                };
+
+            return dictionary;
+        }
+
         [Test]
         public void CalculateASum()
         {
             var calculator = new Calculator();
-            var result = calculator.Calculate("1+2,3");
+            var result = calculator.Calculate("1+2,3", this.ConstructDictionary());
             Check.That(result).IsEqualTo(3.3);
         }
         public void CalculateAMultipleSum()
         {
             var calculator = new Calculator();
-            var result = calculator.Calculate("1+2,3+5.5");
+            var result = calculator.Calculate("1+2,3+5.5", this.ConstructDictionary());
             Check.That(result).IsEqualTo(8.8);
         }
         public void CalculateASubastraction()
         {
             var calculator = new Calculator();
-            var result = calculator.Calculate("1-2,3");
+            var result = calculator.Calculate("1-2,3", this.ConstructDictionary());
             Check.That(result).IsEqualTo(-1.3);
         }
         public void CalculateAMultipleSubastraction()
         {
             var calculator = new Calculator();
-            var result = calculator.Calculate("1-2,3-7");
+            var result = calculator.Calculate("1-2,3-7", this.ConstructDictionary());
             Check.That(result).IsEqualTo(-8.3);
         }
         public void CalculateADivision()
         {
             var calculator = new Calculator();
-            var result = calculator.Calculate("10/5");
+            var result = calculator.Calculate("10/5", this.ConstructDictionary());
             Check.That(result).IsEqualTo(2);
         }
         public void CalculateADivisionByZero()
@@ -42,7 +63,7 @@ namespace SolidExercices.Tests
             var calculator = new Calculator();
             try
             {
-                calculator.Calculate("10/0");
+                calculator.Calculate("10/0", this.ConstructDictionary());
                 Assert.Fail("Expected exception");
             }
             catch (DivideByZeroException)
@@ -55,7 +76,7 @@ namespace SolidExercices.Tests
             var calculator = new Calculator();
             try
             {
-                calculator.Calculate("10,0");
+                calculator.Calculate("10,0", this.ConstructDictionary());
                 Assert.Fail("Expected exception");
             }
             catch (NoneOperatorException)
@@ -68,7 +89,7 @@ namespace SolidExercices.Tests
             var calculator = new Calculator();
             try
             {
-                calculator.Calculate("10+5-2");
+                calculator.Calculate("10+5-2", this.ConstructDictionary());
                 Assert.Fail("Expected exception");
             }
             catch (MultipleOperatorsException)
@@ -79,19 +100,19 @@ namespace SolidExercices.Tests
         public void CalculateAMultipleDivision()
         {
             var calculator = new Calculator();
-            var result = calculator.Calculate("10*5*2");
+            var result = calculator.Calculate("10*5*2", this.ConstructDictionary());
             Check.That(result).IsEqualTo(1);
         }
         public void CalculateAMultiplication()
         {
             var calculator = new Calculator();
-            var result = calculator.Calculate("2*3");
+            var result = calculator.Calculate("2*3", this.ConstructDictionary());
             Check.That(result).IsEqualTo(6);
         }
         public void CalculateAMultipleMultiplication()
         {
             var calculator = new Calculator();
-            var result = calculator.Calculate("2*3*5");
+            var result = calculator.Calculate("2*3*5", this.ConstructDictionary());
             Check.That(result).IsEqualTo(30);
         }
     }
