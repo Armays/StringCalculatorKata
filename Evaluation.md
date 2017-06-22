@@ -19,11 +19,11 @@ Réponses aux questions posées
 
 Q1) On peut faire un dictionnaire qui va associer chaque opérateur à la fonction associée.
 
-Q2)
+Q2) une classe, une fonction ou une méthode doit avoir une et une seule responsabilité
 
-Q3)
+Q3) Principe de la modularité : on peut brancher à la classe des opérations fournies depuis l'extérieur'
 
-Q4)
+Q4) Les opérations sont saisies en dur alors qu'il faudrait pouvoir aller les chercher par une interface ou une base de données, et la sortie n'est que la console.'
 
 Q5)
 

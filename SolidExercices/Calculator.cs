@@ -9,8 +9,8 @@ namespace SolidExercices
     {
         public double Calculate(string operation, Dictionary<char, Func<double, double, double>> dictionary)
         {
-            
-            
+
+
             try
             {
                 var found = false;
@@ -25,16 +25,6 @@ namespace SolidExercices
                 }
                 if (!found) throw new NoneOperatorException();
                 return -99999;
-            }
-            catch (DivideByZeroException)
-            {
-                Console.Error.WriteLine("  Division par zéro");
-                throw;
-            }
-            catch (ArithmeticException)
-            {
-                Console.Error.WriteLine("Exception arithmétique");
-                throw;
             }
         }
     }

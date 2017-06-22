@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculator.cs" />
+    <Compile Include="CalculatorTrainer.cs" />
     <Compile Include="MultipleOperatorsException.cs" />
     <Compile Include="NoneOperatorException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
